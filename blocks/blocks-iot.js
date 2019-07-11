@@ -35,12 +35,20 @@ Blockly.Blocks['mqtt_connector_begin'] = {
 Blockly.Blocks['mqtt_connector_publish'] = {
 	init: function () {
 		this.appendDummyInput()
-			.appendField("on MQTT publish")
-			.appendField("data name:")
-			.appendField(new Blockly.FieldTextInput(""), "DATA");
-		this.appendValueInput("MSG")
+			.appendField("on MQTT publish");
+		this.appendValueInput("MSG1")
+			.appendField("data 1:")
+			.appendField(new Blockly.FieldTextInput("temp"), "DATA1")
 			.appendField("value:");
-		this.setInputsInline(true);
+		this.appendValueInput("MSG2")
+			.appendField("data 2:")
+			.appendField(new Blockly.FieldTextInput("humid"), "DATA2")
+			.appendField("value:");
+		this.appendValueInput("MSG3")
+			.appendField("data 3:")
+			.appendField(new Blockly.FieldTextInput("count"), "DATA3")
+			.appendField("value:");
+		this.setInputsInline(false);
 		this.setPreviousStatement(true, null);
 		this.setNextStatement(true, null);
 		this.setColour(65);
