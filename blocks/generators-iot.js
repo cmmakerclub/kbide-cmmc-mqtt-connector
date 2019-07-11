@@ -58,9 +58,9 @@ Blockly.JavaScript['mqtt_connector_publish'] = function(block) {
   let value_data2 = block.getFieldValue("DATA2");
   let value_data3 = block.getFieldValue("DATA3");
 
-  let value_message1 = block.getFieldValue("MSG1");
-  let value_message2 = block.getFieldValue("MSG2");
-  let value_message3 = block.getFieldValue("MSG3");
+  var value_message1 = Blockly.JavaScript.valueToCode(block, 'MSG1', Blockly.JavaScript.ORDER_ASSIGNMENT) || '0';
+  var value_message2 = Blockly.JavaScript.valueToCode(block, 'MSG2', Blockly.JavaScript.ORDER_ASSIGNMENT) || '0';
+  var value_message3 = Blockly.JavaScript.valueToCode(block, 'MSG3', Blockly.JavaScript.ORDER_ASSIGNMENT) || '0';
  
   let code = `
   strcpy(myName, DEVICE_NAME.c_str());
