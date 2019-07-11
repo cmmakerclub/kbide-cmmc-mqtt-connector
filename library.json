@@ -1,0 +1,16 @@
+{
+  "name": "CMMC-MQTT-Connector",
+  "title" : "MQTT library for ESP32",
+  "keywords": "mqtt, esp32",
+  "description": "CMMC Mqtt connector plugin for esp32",
+  "homepage": "",
+  "license": "MIT",
+  "git": "https://github.com/cmmakerclub/kbide-cmmc-mqtt-connector/",
+  "author": "Maker Asia",
+  "email": "makerasia@gmail.com",
+  "url": "https://kbide.org/",
+  "version": "1.0.0",
+  "board" : "",
+  "platform": ["arduino-esp32"],
+  "image" : "/static/display.jpg"
+}
