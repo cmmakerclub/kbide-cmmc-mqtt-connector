@@ -1,6 +1,3 @@
-module.exports = function(Blockly){
-  'use strict';
-  
   Blockly.JavaScript['mqtt_connector_begin'] = function(block) {
     let value_host = Blockly.JavaScript.valueToCode(block, "HOST", Blockly.JavaScript.ORDER_NONE);
     let value_username = Blockly.JavaScript.valueToCode(block, "USERNAME", Blockly.JavaScript.ORDER_NONE);
@@ -103,6 +100,3 @@ module.exports = function(Blockly){
     `;
     return code;
   };
-  
-  
-  }; // END GENERATORS-IOT.js

@@ -1,8 +1,3 @@
-module.exports = function (Blockly) {
-	'use strict';
-	// =============================================================================
-	// feed iot
-	// =============================================================================
 	Blockly.Blocks['mqtt_connector_begin'] = {
 		init: function () {
 			this.appendDummyInput()
@@ -92,5 +87,3 @@ module.exports = function (Blockly) {
 			this.setHelpUrl("");
 		}
 	};
-
-}; // END BLOCK-IOT.js
