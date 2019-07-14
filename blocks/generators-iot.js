@@ -11,17 +11,24 @@ Blockly.JavaScript["mqtt_connector_begin"] = function(block) {
     #EXTINC #include "MQTT.h" #END
     #EXTINC #include "MqttConnector.h" #END
     #EXTINC #include "PubSubClient.h" #END
-    #EXTINC MqttConnector* mqtt;#END
-    #VARIABLE String DEVICE_NAME      = "${value_devicename}"; #END 
-    #VARIABLE String MQTT_HOST        = "${value_host}"; #END
-    #VARIABLE String MQTT_USERNAME    = "${value_username}"; #END
-    #VARIABLE String MQTT_PASSWORD    = "${value_password}"; #END    
-    #VARIABLE String MQTT_CLIENT_ID   = "${value_clientid}"; #END
-    #VARIABLE String MQTT_PREFIX      = "${value_prefix}"; #END
-    #VARIABLE int MQTT_PORT           = 1883; #END
-    #VARIABLE int PUBLISH_EVERY       = ${value_publish} * 1000; #END
-    #VARIABLE int MQTT_CONNECT_TIMEOUT= 10; #END
-    #VARIABLE char myName[40]; #END
+    
+
+    #VARIABLE
+String DEVICE_NAME      = "${value_devicename}";
+String MQTT_HOST        = "${value_host}";
+String MQTT_USERNAME    = "${value_username}";
+String MQTT_PASSWORD    = "${value_password}";    
+String MQTT_CLIENT_ID   = "${value_clientid}";
+String MQTT_PREFIX      = "${value_prefix}";
+int MQTT_PORT           = 1883;
+int PUBLISH_EVERY       = ${value_publish} * 1000;
+int MQTT_CONNECT_TIMEOUT= 10;
+
+MqttConnector* mqtt;
+#END
+
+#SETUP
+char myName[40];
     
     mqtt = new MqttConnector(MQTT_HOST.c_str(), MQTT_PORT); 
     mqtt->on_connecting([&](int counter, bool *flag) { 
@@ -44,6 +51,8 @@ Blockly.JavaScript["mqtt_connector_begin"] = function(block) {
     });
 
     mqtt->connect(); \n
+
+#END
 
 
     #LOOP_EXT_CODE mqtt->loop(); #END
