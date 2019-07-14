@@ -1,4 +1,4 @@
-Blockly.JavaScript['mqtt_connector_begin'] = function(block) {
+Blockly.JavaScript["mqtt_connector_begin"] = function(block) {
   let value_host = block.getFieldValue("HOST");
   let value_username = block.getFieldValue("USERNAME");
   let value_password = block.getFieldValue("PASSWORD");
@@ -6,7 +6,7 @@ Blockly.JavaScript['mqtt_connector_begin'] = function(block) {
   let value_prefix = block.getFieldValue("PREFIX");
   let value_devicename = block.getFieldValue("NAME");
   let value_publish = block.getFieldValue("PUBLISH");
-  
+
   let code = `
     #EXTINC #include "MQTT.h" #END
     #EXTINC #include "MqttConnector.h" #END
@@ -48,20 +48,26 @@ Blockly.JavaScript['mqtt_connector_begin'] = function(block) {
 
     #LOOP_EXT_CODE mqtt->loop(); #END
     `;
-     return code;
-  };
-  
-Blockly.JavaScript['mqtt_connector_publish'] = function(block) {
+  return code;
+};
+
+Blockly.JavaScript["mqtt_connector_publish"] = function(block) {
   // let value_topic = Blockly.JavaScript.valueToCode(block, "TOPIC", Blockly.JavaScript.ORDER_NONE);
   // let value_message = Blockly.JavaScript.valueToCode(block, "MSG", Blockly.JavaScript.ORDER_NONE);
   let value_data1 = block.getFieldValue("DATA1");
   let value_data2 = block.getFieldValue("DATA2");
   let value_data3 = block.getFieldValue("DATA3");
 
-  var value_message1 = Blockly.JavaScript.valueToCode(block, 'MSG1', Blockly.JavaScript.ORDER_ASSIGNMENT) || '0';
-  var value_message2 = Blockly.JavaScript.valueToCode(block, 'MSG2', Blockly.JavaScript.ORDER_ASSIGNMENT) || '0';
-  var value_message3 = Blockly.JavaScript.valueToCode(block, 'MSG3', Blockly.JavaScript.ORDER_ASSIGNMENT) || '0';
- 
+  var value_message1 = Blockly.JavaScript.valueToCode(block,
+    "MSG1",
+    Blockly.JavaScript.ORDER_ASSIGNMENT) || "0";
+  var value_message2 = Blockly.JavaScript.valueToCode(block,
+    "MSG2",
+    Blockly.JavaScript.ORDER_ASSIGNMENT) || "0";
+  var value_message3 = Blockly.JavaScript.valueToCode(block,
+    "MSG3",
+    Blockly.JavaScript.ORDER_ASSIGNMENT) || "0";
+
   let code = `
   strcpy(myName, DEVICE_NAME.c_str());
   mqtt->on_prepare_data_once([&](void) { Serial.println("initializing sensor..."); });
@@ -85,33 +91,32 @@ Blockly.JavaScript['mqtt_connector_publish'] = function(block) {
   `;
   return code;
 };
-  
-  // Blockly.JavaScript['mqtt_connector_send_command'] = function(block) {
-  //   // var statements_name = Blockly.JavaScript.statementToCode(block, 'NAME');
-  //   // TODO: Assemble JavaScript into code variable.
-  //   var code = '...;\n';
-  //   return code;
-  // };
-  
-  // Blockly.JavaScript['mqtt_connector_receive'] = function(block) {
-  //   // let value_topic = Blockly.JavaScript.valueToCode(block, "TOPIC", Blockly.JavaScript.ORDER_NONE);
-  //   // let value_message = Blockly.JavaScript.valueToCode(block, "MSG", Blockly.JavaScript.ORDER_NONE);
-  
-  //   let code = `
-  //   #SETUPmqtt->on_subscribe([&](MQTT::Subscribe *sub) -> void { #END
-  //   #SETUP  sub->add_topic(MQTT_PREFIX + myName + "/$/+"); #END
-  //   #SETUP  sub->add_topic(MQTT_PREFIX + MQTT_CLIENT_ID + "/$/+"); }); #END
-  
-  //   #SETUPmqtt->on_before_message_arrived_once([&](void) { }); #END
-  //   #SETUPmqtt->on_message([&](const MQTT::Publish & pub) { }); #END
-  
-  //   #SETUPmqtt->on_after_message_arrived([&](String topic, String cmd, String payload) { #END
-  //   #SETUP  if (cmd == "$/command") { #END
-  //   #SETUP    if (payload == "ON") { digitalWrite(relayPin, LOW); } #END
-  //   #SETUP    else if (payload == "OFF") { digitalWrite(relayPin, HIGH);} #END
-  //   #SETUP  } else if (cmd == "$/reboot") { ESP.restart(); #END
-  //   #SETUP  } else { } }); #END
-  //   `;
-  //   return code;
-  // };
-  
+
+// Blockly.JavaScript['mqtt_connector_send_command'] = function(block) {
+//   // var statements_name = Blockly.JavaScript.statementToCode(block, 'NAME');
+//   // TODO: Assemble JavaScript into code variable.
+//   var code = '...;\n';
+//   return code;
+// };
+
+// Blockly.JavaScript['mqtt_connector_receive'] = function(block) {
+//   // let value_topic = Blockly.JavaScript.valueToCode(block, "TOPIC", Blockly.JavaScript.ORDER_NONE);
+//   // let value_message = Blockly.JavaScript.valueToCode(block, "MSG", Blockly.JavaScript.ORDER_NONE);
+
+//   let code = `
+//   #SETUPmqtt->on_subscribe([&](MQTT::Subscribe *sub) -> void { #END
+//   #SETUP  sub->add_topic(MQTT_PREFIX + myName + "/$/+"); #END
+//   #SETUP  sub->add_topic(MQTT_PREFIX + MQTT_CLIENT_ID + "/$/+"); }); #END
+
+//   #SETUPmqtt->on_before_message_arrived_once([&](void) { }); #END
+//   #SETUPmqtt->on_message([&](const MQTT::Publish & pub) { }); #END
+
+//   #SETUPmqtt->on_after_message_arrived([&](String topic, String cmd, String payload) { #END
+//   #SETUP  if (cmd == "$/command") { #END
+//   #SETUP    if (payload == "ON") { digitalWrite(relayPin, LOW); } #END
+//   #SETUP    else if (payload == "OFF") { digitalWrite(relayPin, HIGH);} #END
+//   #SETUP  } else if (cmd == "$/reboot") { ESP.restart(); #END
+//   #SETUP  } else { } }); #END
+//   `;
+//   return code;
+// };
