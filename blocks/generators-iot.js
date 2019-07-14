@@ -13,7 +13,8 @@ Blockly.JavaScript["mqtt_connector_begin"] = function(block) {
     #EXTINC #include "PubSubClient.h" #END
     
 
-    #VARIABLE
+#VARIABLE
+
 String DEVICE_NAME      = "${value_devicename}";
 String MQTT_HOST        = "${value_host}";
 String MQTT_USERNAME    = "${value_username}";
@@ -38,17 +39,6 @@ char myName[40];
       delay(1000);  
     }); 
 
-    mqtt->on_prepare_configuration([&](MqttConnector::Config *config) -> void {  
-      MQTT_CLIENT_ID = String(WiFi.macAddress());  
-      config->clientId  = MQTT_CLIENT_ID;  
-      config->channelPrefix = MQTT_PREFIX;  
-      config->enableLastWill = true;  
-      config->retainPublishMessage = false;  
-      config->mode = MODE_BOTH;  
-      config->firstCapChannel = false;  
-      config->username = String(MQTT_USERNAME);  
-      config->password = String(MQTT_PASSWORD);  
-    });
 
     mqtt->connect(); \n
 
@@ -99,6 +89,33 @@ Blockly.JavaScript["mqtt_connector_publish"] = function(block) {
   \n
   `;
   return code;
+};
+
+Blockly.JavaScript["on_prepare_data"] = function(block) {
+  var var_name = block.getFieldValue("var_name");
+  var_name = "root";
+  var on_prepare_data_do = Blockly.JavaScript.statementToCode(block,
+    "on_prepare_data_do");
+  var code = `
+  #SETUP
+    mqtt->on_prepare_data([&](JsonObject *${var_name}) {
+        JsonObject& data = (*root)["d"];
+        JsonObject& info = (*root)["info"];
+     ${on_prepare_data_do}
+  });
+  #END`;
+  return code;
+};
+
+Blockly.JavaScript["append_value"] = function(block) {
+  var key = Blockly.JavaScript.valueToCode(block,
+    "KEY_NAME", Blockly.JavaScript.ORDER_ATOMIC);
+  var value_text = Blockly.JavaScript.valueToCode(block,
+    "VALUE", Blockly.JavaScript.ORDER_ATOMIC);
+  var code = ` data["${key}"] = ${value_text};`;
+  ;
+  return code;
+
 };
 
 // Blockly.JavaScript['mqtt_connector_send_command'] = function(block) {
