@@ -77,7 +77,12 @@ Blockly.Blocks["on_prepare_data"] = {
 Blockly.Blocks["on_message"] = {
   init: function() {
     this.appendDummyInput()
-      .appendField("on_message");
+      .appendField("on_message")
+      .appendField(" with topic: ")
+      .appendField(new Blockly.FieldTextInput("topic"), "var_topic")
+      .appendField(" and payload: ")
+      .appendField(new Blockly.FieldTextInput("payload"), "var_payload");
+
     /*(
      this.appendValueInput("VAR_TOPIC")
        .setCheck("String")
