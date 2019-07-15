@@ -121,11 +121,10 @@ Blockly.JavaScript["on_message"] = function(block) {
 };
 
 Blockly.JavaScript["append_value"] = function(block) {
-  var key = Blockly.JavaScript.valueToCode(block,
-    "KEY_NAME", Blockly.JavaScript.ORDER_ATOMIC);
+  var key = block.getFieldValue('KEY_NAME');
   var value_text = Blockly.JavaScript.valueToCode(block,
     "VALUE", Blockly.JavaScript.ORDER_ATOMIC);
-  var code = ` data["${key}"] = ${value_text};`;
+  var code = ` data["${key}"] = ${value_text};\n`;
   ;
   return code;
 };

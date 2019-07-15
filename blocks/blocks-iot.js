@@ -107,9 +107,9 @@ Blockly.Blocks["on_message"] = {
 
 Blockly.Blocks["append_value"] = {
   init: function() {
-    this.appendValueInput("KEY_NAME")
-      .setCheck("String")
-      .appendField("append value");
+      this.appendDummyInput()
+      .appendField("append value")
+      .appendField(new Blockly.FieldTextInput("value1"), "KEY_NAME")
     this.appendValueInput("VALUE")
       .appendField("with");
     this.setInputsInline(true);
