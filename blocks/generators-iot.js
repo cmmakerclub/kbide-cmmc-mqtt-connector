@@ -39,6 +39,12 @@ mqtt->on_connecting([&](int counter, bool *flag) {
   }  
   delay(1000);  
 }); 
+s
+mqtt->on_subscribe([&](MQTT::Subscribe *sub) -> void {
+  Serial.printf("myName = %s \\r\\n", myName);
+  sub->add_topic(MQTT_PREFIX + myName + "/$/+");
+  sub->add_topic(MQTT_PREFIX + MQTT_CLIENT_ID + "/$/+");
+});
     
 mqtt->on_prepare_configuration([&](MqttConnector::Config *config) -> void {
   MQTT_CLIENT_ID = String(WiFi.macAddress());
