@@ -121,6 +121,18 @@ Blockly.Blocks["append_value"] = {
   }
 };
 
+Blockly.Blocks['mqtt_connect'] = {
+  init: function() {
+    this.appendDummyInput()
+      .appendField("mqtt_connect");
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(230);
+    this.setTooltip("call mqtt.connect");
+    this.setHelpUrl("");
+  }
+};
+
 // Blockly.Blocks['mqtt_connector_send_command'] = {
 // 	init: function () {
 // 		this.appendValueInput("TOPIC")
@@ -138,7 +150,7 @@ Blockly.Blocks["append_value"] = {
 // 	}
 // };
 
-// Blockly.Blocks['mqtt_connector_receive'] = {
+
 // 	init: function () {
 // 		Blockly.BlockSvg.START_HAT = true;
 // 		this.appendValueInput("TOPIC")

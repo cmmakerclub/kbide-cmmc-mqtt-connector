@@ -38,10 +38,6 @@ char myName[40];
       }  
       delay(1000);  
     }); 
-
-
-    mqtt->connect(); \n
-
 #END
 
 
@@ -99,13 +95,12 @@ Blockly.JavaScript["on_prepare_data"] = function(block) {
     "on_prepare_data_do");
 
   var code = `
-  #SETUP
     mqtt->on_prepare_data([&](JsonObject *${var_name}) {
         JsonObject& data = (*${var_name})["d"];
         JsonObject& info = (*${var_name})["info"];
      ${on_prepare_data_do}
   });
-  #END`;
+  `;
   return code;
 };
 
@@ -118,11 +113,10 @@ Blockly.JavaScript["on_message"] = function(block) {
   var on_message_do = Blockly.JavaScript.statementToCode(block,
     "on_message_do");
   var code = `
-  #SETUP
   mqtt->on_after_message_arrived([&](String ${var_topic}, String cmd, String ${var_payload}) {
   ${on_message_do} 
   });
-  #END`;
+  `;
   return code;
 };
 
@@ -134,7 +128,11 @@ Blockly.JavaScript["append_value"] = function(block) {
   var code = ` data["${key}"] = ${value_text};`;
   ;
   return code;
+};
 
+Blockly.JavaScript["mqtt_connect"] = function(block) {
+  var code = "mqtt->connect();\n";
+  return code;
 };
 
 // Blockly.JavaScript['mqtt_connector_send_command'] = function(block) {
