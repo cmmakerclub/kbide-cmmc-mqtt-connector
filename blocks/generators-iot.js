@@ -94,14 +94,34 @@ Blockly.JavaScript["mqtt_connector_publish"] = function(block) {
 Blockly.JavaScript["on_prepare_data"] = function(block) {
   var var_name = block.getFieldValue("var_name");
   var_name = "root";
+
   var on_prepare_data_do = Blockly.JavaScript.statementToCode(block,
     "on_prepare_data_do");
+
+
   var code = `
   #SETUP
     mqtt->on_prepare_data([&](JsonObject *${var_name}) {
-        JsonObject& data = (*root)["d"];
-        JsonObject& info = (*root)["info"];
+        JsonObject& data = (*${var_name})["d"];
+        JsonObject& info = (*${var_name})["info"];
      ${on_prepare_data_do}
+  });
+  #END`;
+  return code;
+};
+
+Blockly.JavaScript["on_message"] = function(block) {
+  var var_topic = block.getFieldValue("var_topic");
+  var var_payload = block.getFieldValue("var_payload");
+  //var var_topic = Blockly.JavaScript.valueToCode(block,
+  //  "VAR_TOPIC", Blockly.JavaScript.ORDER_ATOMIC);
+
+  var on_prepare_data_do = Blockly.JavaScript.statementToCode(block,
+    "on_message_do");
+  var code = `
+  #SETUP
+  mqtt->on_after_message_arrived([&](String ${var_topic}, String cmd, String ${var_payload}) {
+  
   });
   #END`;
   return code;

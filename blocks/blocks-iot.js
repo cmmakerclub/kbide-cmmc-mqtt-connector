@@ -22,7 +22,8 @@ Blockly.Blocks["mqtt_connector_begin"] = {
       .appendField(new Blockly.FieldTextInput("KBIDE/"), "PREFIX");
     this.appendDummyInput()
       .appendField("PUBLISH every: ")
-      .appendField(new Blockly.FieldTextInput("10"), "PUBLISH");
+      .appendField(new Blockly.FieldTextInput("10"), "PUBLISH")
+      .appendField("s");
     this.setInputsInline(false);
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
@@ -60,32 +61,44 @@ Blockly.Blocks["mqtt_connector_publish"] = {
 Blockly.Blocks["on_prepare_data"] = {
   init: function() {
     this.appendDummyInput()
-      .appendField("on_prepare_data")
-      .appendField(new Blockly.FieldTextInput("root"), "var_name");
-
+      .appendField("on_prepare_data");
+    //.appendField(new Blockly.FieldTextInput("root"), "var_name");
+    //.appendField("(*root)");
     //this.setInputsInline(true);
     this.appendStatementInput("on_prepare_data_do")
       .setCheck(null);
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
     this.setColour(270);
-    this.setTooltip("event when server got event");
+    this.setTooltip("on prepare data");
     this.setHelpUrl("");
   }
 };
+Blockly.Blocks["on_message"] = {
+  init: function() {
+    this.appendDummyInput()
+      .appendField("on_message");
+    /*(
+     this.appendValueInput("VAR_TOPIC")
+       .setCheck("String")
+       .appendField("with topic");
+     this.appendValueInput("VAR_PAYLOAD")
+       .appendField("and payload");
+     */
+    this.setInputsInline(true);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(230);
+    this.appendStatementInput("on_message_do")
+      .setCheck(null);
 
-//Blockly.Blocks["append_value"] = {
-//  init: function() {
-//    this.appendValueInput("number")
-//      .setCheck(["Number", "int", "float", "double", "long"])
-//      .appendField("Append value");
-//    this.setPreviousStatement(true, null);
-//    this.setNextStatement(true, null);
-//    this.setColour(315);
-//    this.setTooltip("Append Value");
-//    this.setHelpUrl("");
-//  }
-//};
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(200);
+    this.setTooltip("on message");
+    this.setHelpUrl("");
+  }
+};
 
 Blockly.Blocks["append_value"] = {
   init: function() {
@@ -102,22 +115,6 @@ Blockly.Blocks["append_value"] = {
     this.setHelpUrl("");
   }
 };
-
-//Blockly.Blocks["on_prepare_data"] = {
-//  init: function() {
-//    this.appendDummyInput()
-//      .appendField("on_prepare_data");
-//    this.appendValueInput("MSG1")
-//      .appendField("data 1:")
-//      .appendField(new Blockly.FieldTextInput("value1"), "DATA1")
-//      .appendField("value:");
-//    this.setColour(230);
-//    this.setTooltip("doing once when program started");
-//    this.setHelpUrl("");
-//    this.setPreviousStatement(true, null);
-//    this.setNextStatement(true, null);
-//  }
-//};
 
 // Blockly.Blocks['mqtt_connector_send_command'] = {
 // 	init: function () {
