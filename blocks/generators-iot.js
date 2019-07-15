@@ -15,6 +15,8 @@ Blockly.JavaScript["mqtt_connector_begin"] = function(block) {
 
 #VARIABLE
 
+static char myName[80];
+
 String DEVICE_NAME      = "${value_devicename}";
 String MQTT_HOST        = "${value_host}";
 String MQTT_USERNAME    = "${value_username}";
@@ -29,21 +31,27 @@ MqttConnector* mqtt;
 #END
 
 #SETUP
-char myName[40];
     
 strcpy(myName, DEVICE_NAME.c_str());
 mqtt = new MqttConnector(MQTT_HOST.c_str(), MQTT_PORT); 
 mqtt->on_connecting([&](int counter, bool *flag) { 
   if (counter >= MQTT_CONNECT_TIMEOUT) {  
     ESP.restart();  
-  }  
-  delay(1000);  
+  } 
+  Serial.println("MQTT Connecting..");
 }); 
-s
+
 mqtt->on_subscribe([&](MQTT::Subscribe *sub) -> void {
   Serial.printf("myName = %s \\r\\n", myName);
-  sub->add_topic(MQTT_PREFIX + myName + "/$/+");
-  sub->add_topic(MQTT_PREFIX + MQTT_CLIENT_ID + "/$/+");
+  String t1 = MQTT_PREFIX + myName + "/$/+";
+  String t2 = MQTT_PREFIX + MQTT_CLIENT_ID + "/$/+";
+  Serial.println("START TOPIC SUBS");
+  Serial.println(t1);
+  Serial.println(t2);
+  Serial.println("DONE TOPIC SUBS");
+  
+  sub->add_topic(t1);
+  sub->add_topic(t2);
 });
     
 mqtt->on_prepare_configuration([&](MqttConnector::Config *config) -> void {
@@ -79,46 +87,6 @@ mqtt->on_prepare_configuration([&](MqttConnector::Config *config) -> void {
   return code;
 };
 
-Blockly.JavaScript["mqtt_connector_publish"] = function(block) {
-  // let value_topic = Blockly.JavaScript.valueToCode(block, "TOPIC", Blockly.JavaScript.ORDER_NONE);
-  // let value_message = Blockly.JavaScript.valueToCode(block, "MSG", Blockly.JavaScript.ORDER_NONE);
-  let value_data1 = block.getFieldValue("DATA1");
-  let value_data2 = block.getFieldValue("DATA2");
-  let value_data3 = block.getFieldValue("DATA3");
-
-  var value_message1 = Blockly.JavaScript.valueToCode(block,
-    "MSG1",
-    Blockly.JavaScript.ORDER_ASSIGNMENT) || "0";
-  var value_message2 = Blockly.JavaScript.valueToCode(block,
-    "MSG2",
-    Blockly.JavaScript.ORDER_ASSIGNMENT) || "0";
-  var value_message3 = Blockly.JavaScript.valueToCode(block,
-    "MSG3",
-    Blockly.JavaScript.ORDER_ASSIGNMENT) || "0";
-
-  let code = `
-  mqtt->on_prepare_data_once([&](void) { Serial.println("initializing sensor..."); });
-  mqtt->on_before_prepare_data([&](void) { Serial.println("Read sensor..."); });
-  
-  mqtt->on_prepare_data([&](JsonObject *root) {
-    Serial.println("on_prepare_data...");
-    JsonObject& data = (*root)["d"];
-    JsonObject& info = (*root)["info"];
-    data["myName"] = myName;
-    data["millis"] = millis();
-    data["${value_data1}"] = ${value_message1};
-    data["${value_data2}"] = ${value_message2};
-    data["${value_data3}"] = ${value_message3};
-    data["updateInterval"] = PUBLISH_EVERY;
-  }, PUBLISH_EVERY);
-    
-  mqtt->on_after_prepare_data([&](JsonObject * root) {});
-  mqtt->on_published([&](const MQTT::Publish & pub) { Serial.println("Published."); });
-  \n
-  `;
-  return code;
-};
-
 Blockly.JavaScript["on_prepare_data"] = function(block) {
   var var_name = block.getFieldValue("var_name");
   var_name = "root";
@@ -130,8 +98,9 @@ Blockly.JavaScript["on_prepare_data"] = function(block) {
     mqtt->on_prepare_data([&](JsonObject *${var_name}) {
         JsonObject& data = (*${var_name})["d"];
         JsonObject& info = (*${var_name})["info"];
+        data["myName"] = myName;
      ${on_prepare_data_do}
-  });
+  }, PUBLISH_EVERY);
   `;
   return code;
 };
@@ -139,13 +108,12 @@ Blockly.JavaScript["on_prepare_data"] = function(block) {
 Blockly.JavaScript["on_message"] = function(block) {
   var var_topic = block.getFieldValue("var_topic");
   var var_payload = block.getFieldValue("var_payload");
-  //var var_topic = Blockly.JavaScript.valueToCode(block,
-  //  "VAR_TOPIC", Blockly.JavaScript.ORDER_ATOMIC);
+  var var_cmd = block.getFieldValue("var_cmd");
 
   var on_message_do = Blockly.JavaScript.statementToCode(block,
     "on_message_do");
   var code = `
-  mqtt->on_after_message_arrived([&](String ${var_topic}, String cmd, String ${var_payload}) {
+  mqtt->on_after_message_arrived([&](String ${var_topic}, String ${var_cmd}, String ${var_payload}) { 
   ${on_message_do} 
   });
   `;
@@ -153,7 +121,7 @@ Blockly.JavaScript["on_message"] = function(block) {
 };
 
 Blockly.JavaScript["append_value"] = function(block) {
-  var key = block.getFieldValue('KEY_NAME');
+  var key = block.getFieldValue("KEY_NAME");
   var value_text = Blockly.JavaScript.valueToCode(block,
     "VALUE", Blockly.JavaScript.ORDER_ATOMIC);
   var code = ` data["${key}"] = ${value_text};\n`;

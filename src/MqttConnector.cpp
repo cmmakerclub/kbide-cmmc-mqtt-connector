@@ -63,7 +63,7 @@ MqttConnector::MqttConnector(const char* host, uint16_t port)
             const char *p = p_topic.c_str();
             int fc = 0;
             while(*p++ != '/') { fc++; }
-            _user_on_after_message_arrived(p_topic, p_topic.substring(fc+1), pub.payload_string());
+            _user_on_after_message_arrived(pub.topic(), p_topic.substring(fc+1), pub.payload_string());
         }
     };
 
@@ -105,22 +105,22 @@ void MqttConnector::init_config(const char* host, uint16_t port)
     // this->d = &((JsonObject)r["d"]);
     this->d = &dd;
 
-    #ifdef ESP8266
-        static struct station_config conf;
-        wifi_station_get_config(&conf);
-        const char* ssid = reinterpret_cast<const char*>(conf.ssid);
-        info["ssid"] =  String(ssid);
-        info["flash_id"] = String(ESP.getFlashChipId(), HEX);
-        info["chip_id"] = String(ESP.getChipId(), HEX);
-    #else
-        // wifi_config_t conf;
-        // esp_wifi_get_config(WIFI_IF_STA, &conf);
-        wifi_config_t conf;
-        esp_wifi_get_config(WIFI_IF_STA, &conf);
-        info["ssid"] =  String(reinterpret_cast<const char*>(conf.sta.ssid));
-        info["chip_id"] = WiFi.macAddress();
-        // info["chip_id"] = String(ESP.getChipId(), HEX);
-    #endif
+//    #ifdef ESP8266
+//        static struct station_config conf;
+//        wifi_station_get_config(&conf);
+//        const char* ssid = reinterpret_cast<const char*>(conf.ssid);
+//        info["ssid"] =  String(ssid);
+//        info["flash_id"] = String(ESP.getFlashChipId(), HEX);
+//        info["chip_id"] = String(ESP.getChipId(), HEX);
+//    #else
+//        // wifi_config_t conf;
+//        // esp_wifi_get_config(WIFI_IF_STA, &conf);
+//        wifi_config_t conf;
+//        esp_wifi_get_config(WIFI_IF_STA, &conf);
+//        info["ssid"] =  String(reinterpret_cast<const char*>(conf.sta.ssid));
+//        info["chip_id"] = WiFi.macAddress();
+//        // info["chip_id"] = String(ESP.getChipId(), HEX);
+//    #endif
 
     String mac = String(WiFi.macAddress());
     mac.toLowerCase();

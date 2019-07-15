@@ -80,6 +80,8 @@ Blockly.Blocks["on_message"] = {
       .appendField("on_message")
       .appendField(" with topic: ")
       .appendField(new Blockly.FieldTextInput("topic"), "var_topic")
+      .appendField(" cmd: ")
+      .appendField(new Blockly.FieldTextInput("cmd"), "var_cmd")
       .appendField(" and payload: ")
       .appendField(new Blockly.FieldTextInput("payload"), "var_payload");
 
@@ -107,9 +109,9 @@ Blockly.Blocks["on_message"] = {
 
 Blockly.Blocks["append_value"] = {
   init: function() {
-      this.appendDummyInput()
+    this.appendDummyInput()
       .appendField("append value")
-      .appendField(new Blockly.FieldTextInput("value1"), "KEY_NAME")
+      .appendField(new Blockly.FieldTextInput("value1"), "KEY_NAME");
     this.appendValueInput("VALUE")
       .appendField("with");
     this.setInputsInline(true);
@@ -121,7 +123,7 @@ Blockly.Blocks["append_value"] = {
   }
 };
 
-Blockly.Blocks['mqtt_connect'] = {
+Blockly.Blocks["mqtt_connect"] = {
   init: function() {
     this.appendDummyInput()
       .appendField("mqtt_connect");
@@ -149,7 +151,6 @@ Blockly.Blocks['mqtt_connect'] = {
 // 		this.setHelpUrl("");
 // 	}
 // };
-
 
 // 	init: function () {
 // 		Blockly.BlockSvg.START_HAT = true;
