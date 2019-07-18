@@ -133,32 +133,3 @@ Blockly.JavaScript["mqtt_connect"] = function(block) {
   var code = "mqtt->connect();\n";
   return code;
 };
-
-// Blockly.JavaScript['mqtt_connector_send_command'] = function(block) {
-//   // var statements_name = Blockly.JavaScript.statementToCode(block, 'NAME');
-//   // TODO: Assemble JavaScript into code variable.
-//   var code = '...;\n';
-//   return code;
-// };
-
-// Blockly.JavaScript['mqtt_connector_receive'] = function(block) {
-//   // let value_topic = Blockly.JavaScript.valueToCode(block, "TOPIC", Blockly.JavaScript.ORDER_NONE);
-//   // let value_message = Blockly.JavaScript.valueToCode(block, "MSG", Blockly.JavaScript.ORDER_NONE);
-
-//   let code = `
-//   #SETUPmqtt->on_subscribe([&](MQTT::Subscribe *sub) -> void { #END
-//   #SETUP  sub->add_topic(MQTT_PREFIX + myName + "/$/+"); #END
-//   #SETUP  sub->add_topic(MQTT_PREFIX + MQTT_CLIENT_ID + "/$/+"); }); #END
-
-//   #SETUPmqtt->on_before_message_arrived_once([&](void) { }); #END
-//   #SETUPmqtt->on_message([&](const MQTT::Publish & pub) { }); #END
-
-//   #SETUPmqtt->on_after_message_arrived([&](String topic, String cmd, String payload) { #END
-//   #SETUP  if (cmd == "$/command") { #END
-//   #SETUP    if (payload == "ON") { digitalWrite(relayPin, LOW); } #END
-//   #SETUP    else if (payload == "OFF") { digitalWrite(relayPin, HIGH);} #END
-//   #SETUP  } else if (cmd == "$/reboot") { ESP.restart(); #END
-//   #SETUP  } else { } }); #END
-//   `;
-//   return code;
-// };

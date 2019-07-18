@@ -110,7 +110,7 @@ Blockly.Blocks["on_message"] = {
 Blockly.Blocks["append_value"] = {
   init: function() {
     this.appendDummyInput()
-      .appendField("append value")
+      .appendField("add publish mqtt value")
       .appendField(new Blockly.FieldTextInput("value1"), "KEY_NAME");
     this.appendValueInput("VALUE")
       .appendField("with");
