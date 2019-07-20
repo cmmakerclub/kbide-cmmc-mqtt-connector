@@ -1,6 +1,6 @@
 {
   "name": "CMMC-MQTT-Connector",
-  "title" : "MQTT Connectoor library for ESP32",
+  "title" : "MQTT Connector for ESP32",
   "keywords": "mqtt, esp32",
   "description": "Chiang Mai Maker Club Mqtt connector plugin for esp32",
   "homepage": "",
